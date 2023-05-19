@@ -1,32 +1,65 @@
 <script>
+import User from './components/user.vue';
+
 export default {
   data() {
     return {
-      text: 'hello',
+      users: [
+        {
+          id: 1,
+          name: 'name1',
+          surn: 'surn1',
+        },
+        {
+          id: 2,
+          name: 'name2',
+          surn: 'surn2',
+        },
+        {
+          id: 3,
+          name: 'name3',
+          surn: 'surn3',
+        },
+      ],
     };
   },
   methods: {
-    func(par) {
-      this.text = par;
+    remove(id) {
+      this.users = this.users.filter((user) => {
+        return user.id !== id;
+      });
     },
-    addPar() {
-      this.text = 'UUUU';
+
+    change(id, name, surn) {
+      this.users = this.users.map((user) => {
+        if (user.id == id) {
+          user.name = name;
+          user.surn = surn;
+        }
+        return user;
+      });
+    },
+    add(name, surn) {
+      let id = this.users.length + 1;
+
+      this.users.push({ id, name, surn });
     },
   },
+  components: { User },
 };
 </script>
 
 <template>
-  <div>
-    <p>{{ text }}</p>
-  </div>
-
-  <button v-on:click="func('miruMir')">ClickHere</button>
-
-  <button @click="addPar">Click88</button>
-  <div>
-    <a :href="text">text</a>
-  </div>
+  <User
+    v-for="el in users"
+    :key="el.id"
+    :name="el.name"
+    :surn="el.surn"
+    :id="el.id"
+    @remove="remove"
+    @change="change"
+    @add="add"
+  />
 </template>
 
 <style scoped></style>
