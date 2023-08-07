@@ -1,52 +1,42 @@
 <script>
 export default {
-  props: ['name', 'surn', 'id'],
-  emits: ['remove', 'change', 'add'],
+  props: ['name', 'age', 'salary', 'id'],
+  emits: ['channge'],
   data() {
     return {
       isEdit: false,
       newName: this.name,
-      newSurn: this.surn,
-      newNameV: '',
-      newSurnV: '',
+      newSalary: this.salary,
     };
   },
   methods: {
     edit() {
       this.isEdit = true;
     },
-    // save() {
-    //   this.isEdit = false;
-    //   this.$emit('change', this.id, this.newName, this.newSurn);
 
-    // },
-    add() {
-      this.$emit('add', this.newName, this.newSurn);
+    save() {
+      this.isEdit = false;
+      this.$emit('channge', this.id, this.newName, this.newSalary);
     },
   },
 };
 </script>
 
 <template>
-  <!-- <template v-if="!isEdit">
-    <ul>
-      <li>
+  <ul>
+    <li>
+      <template v-if="!isEdit">
         {{ name }}
-        {{ surn }}
+        {{ salary }}
         <button @click="edit">edit</button>
-      </li>
-    </ul>
-  </template>
-  <template v-else>
-    <input v-model="newName" />
-    <input v-model="newSurn" />
-    <button @click="save">save</button>
-  </template> -->
-
-  <input v-model="newName" />
-  <input v-model="newSurn" />
-
-  <button @click="add">save</button>
+      </template>
+      <template v-else>
+        <input v-model="newName" />
+        <input v-model="newSalary" />
+        <button @click="save">save</button>
+      </template>
+    </li>
+  </ul>
 </template>
 
 <style scoped></style>
